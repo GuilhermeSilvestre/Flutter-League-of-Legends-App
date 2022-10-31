@@ -1228,284 +1228,794 @@ class _BaseScreenState extends State<BaseScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                        'Duração da partida: ${gameDuration[i]} minutos'),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          width: 140,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              if (team1WinGame[i] == true)
-                                                Text(
-                                                  'VITÓRIA',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.lightGreen),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue[200],
+                                    border: Border.all(
+                                      color: Colors.lightGreen,
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        'Duração da partida: ${gameDuration[i]} minutos',
+                                        style: matchTimeLabel,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            width: 140,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    if (team1WinGame[i] == true)
+                                                      Text(
+                                                        'VITÓRIA',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: Colors
+                                                                .green[700],
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    if (team1WinGame[i] ==
+                                                        false)
+                                                      Text('DERROTA',
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              color: Colors
+                                                                  .deepOrange,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          textAlign:
+                                                              TextAlign.center),
+                                                  ],
                                                 ),
-                                              if (team1WinGame[i] == false)
-                                                Text(
-                                                  'DERROTA',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.deepOrange),
+                                                SizedBox(
+                                                  height: 10,
                                                 ),
-                                              OutlinedButton(
-                                                onPressed: () {
-                                                  fieldText.clear();
-                                                  FocusScope.of(context)
-                                                      .unfocus();
-                                                  setState(() {
-                                                    loading = 'loading';
-                                                    //Limpar jogos exibidos
-                                                    for (int j = 0;
-                                                        j < 20;
-                                                        j++) {
-                                                      exibirJogos[j] = false;
-                                                    }
-                                                    apiRequestByPlayerInMatch(
-                                                            apiTeamMate1Nick[i])
-                                                        .then((finish) {
-                                                      apiRequestRank();
-                                                    }).then((atualizar) {
-                                                      updateScreen();
-                                                    }).then((games) {
-                                                      apiRequestGames();
+
+                                                //Começa os players equipe A
+                                                OutlinedButton(
+                                                  onPressed: () {
+                                                    nickPlayer = '';
+                                                    fieldText.clear();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      loading = 'loading';
+                                                      //Limpar jogos exibidos
+                                                      for (int j = 0;
+                                                          j < 20;
+                                                          j++) {
+                                                        exibirJogos[j] = false;
+                                                      }
+                                                      apiRequestByPlayerInMatch(
+                                                              apiTeamMate1Nick[
+                                                                  i])
+                                                          .then((finish) {
+                                                        apiRequestRank();
+                                                      }).then((atualizar) {
+                                                        updateScreen();
+                                                      }).then((games) {
+                                                        apiRequestGames();
+                                                      });
                                                     });
-                                                  });
-                                                },
-                                                style: OutlinedButton.styleFrom(
-                                                  side: BorderSide(
-                                                      width: 1,
-                                                      color: Colors.deepPurple),
-                                                  shadowColor: Colors.white54,
-                                                  elevation: 1,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                20)),
+                                                  },
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    shadowColor: Colors.white54,
+                                                    elevation: 1,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                    ),
+                                                    fixedSize: Size(150, 20),
+                                                  ),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                        apiTeamMate1Nick[i],
+                                                        style: gameNicksStyle),
                                                   ),
                                                 ),
-                                                child: Text(apiTeamMate1Nick[i],
-                                                    style: gameNicksStyle),
-                                              ),
-                                              Text(
-                                                '${apiTeamMate1Kills[i]}/${apiTeamMate1Deaths[i]}/${apiTeamMate1Assists[i]}',
-                                                style: gameScoreStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Image.network(
-                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate1Champion[i]}.png',
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              Text(apiTeamMate1Champion[i]),
-                                              SelectableText(
-                                                apiTeamMate2Nick[i],
-                                                style: gameNicksStyle,
-                                              ),
-                                              Text(
-                                                '${apiTeamMate2Kills[i]}/${apiTeamMate2Deaths[i]}/${apiTeamMate2Assists[i]}',
-                                                style: gameScoreStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Image.network(
-                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate2Champion[i]}.png',
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              Text(apiTeamMate2Champion[i]),
-                                              SelectableText(
-                                                apiTeamMate3Nick[i],
-                                                style: gameNicksStyle,
-                                              ),
-                                              Text(
-                                                '${apiTeamMate3Kills[i]}/${apiTeamMate3Deaths[i]}/${apiTeamMate3Assists[i]}',
-                                                style: gameScoreStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Image.network(
-                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate3Champion[i]}.png',
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              Text(apiTeamMate3Champion[i]),
-                                              SelectableText(
-                                                apiTeamMate4Nick[i],
-                                                style: gameNicksStyle,
-                                              ),
-                                              Text(
-                                                '${apiTeamMate4Kills[i]}/${apiTeamMate4Deaths[i]}/${apiTeamMate4Assists[i]}',
-                                                style: gameScoreStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Image.network(
-                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate4Champion[i]}.png',
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              Text(apiTeamMate4Champion[i]),
-                                              SelectableText(
-                                                apiTeamMate5Nick[i],
-                                                style: gameNicksStyle,
-                                              ),
-                                              Text(
-                                                '${apiTeamMate5Kills[i]}/${apiTeamMate5Deaths[i]}/${apiTeamMate5Assists[i]}',
-                                                style: gameScoreStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Image.network(
-                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate5Champion[i]}.png',
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              Text(apiTeamMate5Champion[i]),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 25,
-                                        ),
-                                        Text(
-                                          'VS',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 25,
-                                        ),
-                                        Container(
-                                          width: 140,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              if (team2WinGame[i] == true)
                                                 Text(
-                                                  'VITÓRIA',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.lightGreen),
+                                                  '${apiTeamMate1Kills[i]}/${apiTeamMate1Deaths[i]}/${apiTeamMate1Assists[i]}',
+                                                  style: gameScoreStyle,
                                                 ),
-                                              if (team2WinGame[i] == false)
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Image.network(
+                                                  'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate1Champion[i]}.png',
+                                                  width: 40,
+                                                  height: 40,
+                                                ),
+                                                Text(apiTeamMate1Champion[i]),
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                OutlinedButton(
+                                                  onPressed: () {
+                                                    nickPlayer = '';
+                                                    fieldText.clear();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      loading = 'loading';
+                                                      //Limpar jogos exibidos
+                                                      for (int j = 0;
+                                                          j < 20;
+                                                          j++) {
+                                                        exibirJogos[j] = false;
+                                                      }
+                                                      apiRequestByPlayerInMatch(
+                                                              apiTeamMate2Nick[
+                                                                  i])
+                                                          .then((finish) {
+                                                        apiRequestRank();
+                                                      }).then((atualizar) {
+                                                        updateScreen();
+                                                      }).then((games) {
+                                                        apiRequestGames();
+                                                      });
+                                                    });
+                                                  },
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    shadowColor: Colors.white54,
+                                                    elevation: 1,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                    ),
+                                                    fixedSize: Size(150, 20),
+                                                  ),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                        apiTeamMate2Nick[i],
+                                                        style: gameNicksStyle),
+                                                  ),
+                                                ),
                                                 Text(
-                                                  'DERROTA',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.deepOrange),
+                                                  '${apiTeamMate2Kills[i]}/${apiTeamMate2Deaths[i]}/${apiTeamMate2Assists[i]}',
+                                                  style: gameScoreStyle,
                                                 ),
-                                              SelectableText(
-                                                apiTeamMate6Nick[i],
-                                                style: gameNicksStyle,
-                                              ),
-                                              Text(
-                                                '${apiTeamMate6Kills[i]}/${apiTeamMate6Deaths[i]}/${apiTeamMate6Assists[i]}',
-                                                style: gameScoreStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Image.network(
-                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate6Champion[i]}.png',
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              Text(apiTeamMate6Champion[i]),
-                                              SelectableText(
-                                                apiTeamMate7Nick[i],
-                                                style: gameNicksStyle,
-                                              ),
-                                              Text(
-                                                '${apiTeamMate7Kills[i]}/${apiTeamMate7Deaths[i]}/${apiTeamMate7Assists[i]}',
-                                                style: gameScoreStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Image.network(
-                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate7Champion[i]}.png',
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              Text(apiTeamMate7Champion[i]),
-                                              SelectableText(
-                                                apiTeamMate8Nick[i],
-                                                style: gameNicksStyle,
-                                              ),
-                                              Text(
-                                                '${apiTeamMate8Kills[i]}/${apiTeamMate8Deaths[i]}/${apiTeamMate8Assists[i]}',
-                                                style: gameScoreStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Image.network(
-                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate8Champion[i]}.png',
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              Text(apiTeamMate8Champion[i]),
-                                              SelectableText(
-                                                apiTeamMate9Nick[i],
-                                                style: gameNicksStyle,
-                                              ),
-                                              Text(
-                                                '${apiTeamMate9Kills[i]}/${apiTeamMate9Deaths[i]}/${apiTeamMate9Assists[i]}',
-                                                style: gameScoreStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Image.network(
-                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate9Champion[i]}.png',
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              Text(apiTeamMate9Champion[i]),
-                                              SelectableText(
-                                                apiTeamMate10Nick[i],
-                                                style: gameNicksStyle,
-                                              ),
-                                              Text(
-                                                '${apiTeamMate10Kills[i]}/${apiTeamMate10Deaths[i]}/${apiTeamMate10Assists[i]}',
-                                                style: gameScoreStyle,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Image.network(
-                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate10Champion[i]}.png',
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              Text(apiTeamMate10Champion[i]),
-                                            ],
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Image.network(
+                                                  'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate2Champion[i]}.png',
+                                                  width: 40,
+                                                  height: 40,
+                                                ),
+                                                Text(apiTeamMate2Champion[i]),
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                OutlinedButton(
+                                                  onPressed: () {
+                                                    nickPlayer = '';
+                                                    fieldText.clear();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      loading = 'loading';
+                                                      //Limpar jogos exibidos
+                                                      for (int j = 0;
+                                                          j < 20;
+                                                          j++) {
+                                                        exibirJogos[j] = false;
+                                                      }
+                                                      apiRequestByPlayerInMatch(
+                                                              apiTeamMate3Nick[
+                                                                  i])
+                                                          .then((finish) {
+                                                        apiRequestRank();
+                                                      }).then((atualizar) {
+                                                        updateScreen();
+                                                      }).then((games) {
+                                                        apiRequestGames();
+                                                      });
+                                                    });
+                                                  },
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    shadowColor: Colors.white54,
+                                                    elevation: 1,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                    ),
+                                                    fixedSize: Size(150, 20),
+                                                  ),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                        apiTeamMate3Nick[i],
+                                                        style: gameNicksStyle),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${apiTeamMate3Kills[i]}/${apiTeamMate3Deaths[i]}/${apiTeamMate3Assists[i]}',
+                                                  style: gameScoreStyle,
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Image.network(
+                                                  'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate3Champion[i]}.png',
+                                                  width: 40,
+                                                  height: 40,
+                                                ),
+                                                Text(apiTeamMate3Champion[i]),
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                OutlinedButton(
+                                                  onPressed: () {
+                                                    nickPlayer = '';
+                                                    fieldText.clear();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      loading = 'loading';
+                                                      //Limpar jogos exibidos
+                                                      for (int j = 0;
+                                                          j < 20;
+                                                          j++) {
+                                                        exibirJogos[j] = false;
+                                                      }
+                                                      apiRequestByPlayerInMatch(
+                                                              apiTeamMate4Nick[
+                                                                  i])
+                                                          .then((finish) {
+                                                        apiRequestRank();
+                                                      }).then((atualizar) {
+                                                        updateScreen();
+                                                      }).then((games) {
+                                                        apiRequestGames();
+                                                      });
+                                                    });
+                                                  },
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    shadowColor: Colors.white54,
+                                                    elevation: 1,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                    ),
+                                                    fixedSize: Size(150, 20),
+                                                  ),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                        apiTeamMate4Nick[i],
+                                                        style: gameNicksStyle),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${apiTeamMate4Kills[i]}/${apiTeamMate4Deaths[i]}/${apiTeamMate4Assists[i]}',
+                                                  style: gameScoreStyle,
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Image.network(
+                                                  'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate4Champion[i]}.png',
+                                                  width: 40,
+                                                  height: 40,
+                                                ),
+                                                Text(apiTeamMate4Champion[i]),
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                OutlinedButton(
+                                                  onPressed: () {
+                                                    nickPlayer = '';
+                                                    fieldText.clear();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      loading = 'loading';
+                                                      //Limpar jogos exibidos
+                                                      for (int j = 0;
+                                                          j < 20;
+                                                          j++) {
+                                                        exibirJogos[j] = false;
+                                                      }
+                                                      apiRequestByPlayerInMatch(
+                                                              apiTeamMate5Nick[
+                                                                  i])
+                                                          .then((finish) {
+                                                        apiRequestRank();
+                                                      }).then((atualizar) {
+                                                        updateScreen();
+                                                      }).then((games) {
+                                                        apiRequestGames();
+                                                      });
+                                                    });
+                                                  },
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    shadowColor: Colors.white54,
+                                                    elevation: 1,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                    ),
+                                                    fixedSize: Size(150, 20),
+                                                  ),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                        apiTeamMate5Nick[i],
+                                                        style: gameNicksStyle),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${apiTeamMate5Kills[i]}/${apiTeamMate5Deaths[i]}/${apiTeamMate5Assists[i]}',
+                                                  style: gameScoreStyle,
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Image.network(
+                                                  'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate5Champion[i]}.png',
+                                                  width: 40,
+                                                  height: 40,
+                                                ),
+                                                Text(apiTeamMate5Champion[i]),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          //VERSUS
+                                          Text(
+                                            'VS',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          Container(
+                                            width: 140,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    if (team2WinGame[i] == true)
+                                                      Text(
+                                                        'VITÓRIA',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: Colors
+                                                                .green[700],
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    if (team2WinGame[i] ==
+                                                        false)
+                                                      Text('DERROTA',
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              color: Colors
+                                                                  .deepOrange,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          textAlign:
+                                                              TextAlign.center),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+
+                                                //Começa os players equipe B
+                                                OutlinedButton(
+                                                  onPressed: () {
+                                                    nickPlayer = '';
+                                                    fieldText.clear();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      loading = 'loading';
+                                                      //Limpar jogos exibidos
+                                                      for (int j = 0;
+                                                          j < 20;
+                                                          j++) {
+                                                        exibirJogos[j] = false;
+                                                      }
+                                                      apiRequestByPlayerInMatch(
+                                                              apiTeamMate6Nick[
+                                                                  i])
+                                                          .then((finish) {
+                                                        apiRequestRank();
+                                                      }).then((atualizar) {
+                                                        updateScreen();
+                                                      }).then((games) {
+                                                        apiRequestGames();
+                                                      });
+                                                    });
+                                                  },
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    shadowColor: Colors.white54,
+                                                    elevation: 1,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                    ),
+                                                    fixedSize: Size(150, 20),
+                                                  ),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                        apiTeamMate6Nick[i],
+                                                        style: gameNicksStyle),
+                                                  ),
+                                                ),
+
+                                                Text(
+                                                  '${apiTeamMate6Kills[i]}/${apiTeamMate6Deaths[i]}/${apiTeamMate6Assists[i]}',
+                                                  style: gameScoreStyle,
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Image.network(
+                                                  'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate6Champion[i]}.png',
+                                                  width: 40,
+                                                  height: 40,
+                                                ),
+                                                Text(apiTeamMate6Champion[i]),
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                OutlinedButton(
+                                                  onPressed: () {
+                                                    nickPlayer = '';
+                                                    fieldText.clear();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      loading = 'loading';
+                                                      //Limpar jogos exibidos
+                                                      for (int j = 0;
+                                                          j < 20;
+                                                          j++) {
+                                                        exibirJogos[j] = false;
+                                                      }
+                                                      apiRequestByPlayerInMatch(
+                                                              apiTeamMate7Nick[
+                                                                  i])
+                                                          .then((finish) {
+                                                        apiRequestRank();
+                                                      }).then((atualizar) {
+                                                        updateScreen();
+                                                      }).then((games) {
+                                                        apiRequestGames();
+                                                      });
+                                                    });
+                                                  },
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    shadowColor: Colors.white54,
+                                                    elevation: 1,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                    ),
+                                                    fixedSize: Size(150, 20),
+                                                  ),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                        apiTeamMate7Nick[i],
+                                                        style: gameNicksStyle),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${apiTeamMate7Kills[i]}/${apiTeamMate7Deaths[i]}/${apiTeamMate7Assists[i]}',
+                                                  style: gameScoreStyle,
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Image.network(
+                                                  'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate7Champion[i]}.png',
+                                                  width: 40,
+                                                  height: 40,
+                                                ),
+                                                Text(apiTeamMate7Champion[i]),
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                OutlinedButton(
+                                                  onPressed: () {
+                                                    nickPlayer = '';
+                                                    fieldText.clear();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      loading = 'loading';
+                                                      //Limpar jogos exibidos
+                                                      for (int j = 0;
+                                                          j < 20;
+                                                          j++) {
+                                                        exibirJogos[j] = false;
+                                                      }
+                                                      apiRequestByPlayerInMatch(
+                                                              apiTeamMate8Nick[
+                                                                  i])
+                                                          .then((finish) {
+                                                        apiRequestRank();
+                                                      }).then((atualizar) {
+                                                        updateScreen();
+                                                      }).then((games) {
+                                                        apiRequestGames();
+                                                      });
+                                                    });
+                                                  },
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    shadowColor: Colors.white54,
+                                                    elevation: 1,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                    ),
+                                                    fixedSize: Size(150, 20),
+                                                  ),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                        apiTeamMate8Nick[i],
+                                                        style: gameNicksStyle),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${apiTeamMate8Kills[i]}/${apiTeamMate8Deaths[i]}/${apiTeamMate8Assists[i]}',
+                                                  style: gameScoreStyle,
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Image.network(
+                                                  'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate8Champion[i]}.png',
+                                                  width: 40,
+                                                  height: 40,
+                                                ),
+                                                Text(apiTeamMate8Champion[i]),
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                OutlinedButton(
+                                                  onPressed: () {
+                                                    nickPlayer = '';
+                                                    fieldText.clear();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      loading = 'loading';
+                                                      //Limpar jogos exibidos
+                                                      for (int j = 0;
+                                                          j < 20;
+                                                          j++) {
+                                                        exibirJogos[j] = false;
+                                                      }
+                                                      apiRequestByPlayerInMatch(
+                                                              apiTeamMate9Nick[
+                                                                  i])
+                                                          .then((finish) {
+                                                        apiRequestRank();
+                                                      }).then((atualizar) {
+                                                        updateScreen();
+                                                      }).then((games) {
+                                                        apiRequestGames();
+                                                      });
+                                                    });
+                                                  },
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    shadowColor: Colors.white54,
+                                                    elevation: 1,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                    ),
+                                                    fixedSize: Size(150, 20),
+                                                  ),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                        apiTeamMate9Nick[i],
+                                                        style: gameNicksStyle),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${apiTeamMate9Kills[i]}/${apiTeamMate9Deaths[i]}/${apiTeamMate9Assists[i]}',
+                                                  style: gameScoreStyle,
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Image.network(
+                                                  'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate9Champion[i]}.png',
+                                                  width: 40,
+                                                  height: 40,
+                                                ),
+                                                Text(apiTeamMate9Champion[i]),
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                OutlinedButton(
+                                                  onPressed: () {
+                                                    nickPlayer = '';
+                                                    fieldText.clear();
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    setState(() {
+                                                      loading = 'loading';
+                                                      //Limpar jogos exibidos
+                                                      for (int j = 0;
+                                                          j < 20;
+                                                          j++) {
+                                                        exibirJogos[j] = false;
+                                                      }
+                                                      apiRequestByPlayerInMatch(
+                                                              apiTeamMate10Nick[
+                                                                  i])
+                                                          .then((finish) {
+                                                        apiRequestRank();
+                                                      }).then((atualizar) {
+                                                        updateScreen();
+                                                      }).then((games) {
+                                                        apiRequestGames();
+                                                      });
+                                                    });
+                                                  },
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                    side: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Colors.deepPurple),
+                                                    shadowColor: Colors.white54,
+                                                    elevation: 1,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  20)),
+                                                    ),
+                                                    fixedSize: Size(150, 20),
+                                                  ),
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                        apiTeamMate10Nick[i],
+                                                        style: gameNicksStyle),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${apiTeamMate10Kills[i]}/${apiTeamMate10Deaths[i]}/${apiTeamMate10Assists[i]}',
+                                                  style: gameScoreStyle,
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Image.network(
+                                                  'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate10Champion[i]}.png',
+                                                  width: 40,
+                                                  height: 40,
+                                                ),
+                                                Text(apiTeamMate10Champion[i]),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
