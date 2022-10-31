@@ -152,6 +152,10 @@ class _BaseScreenState extends State<BaseScreen> {
   late List<dynamic> team1WinGame = List.filled(20, false);
   late List<dynamic> team2WinGame = List.filled(20, false);
 
+  //Versao da api das imagens
+  dynamic actualVersion;
+  dynamic apiDataVersionImage;
+
   Future<void> updateScreen() async {
     await Future.delayed(Duration(seconds: 2));
     setState(() {
@@ -423,6 +427,38 @@ class _BaseScreenState extends State<BaseScreen> {
     apiTeamMate10Assists[x] = apiDataGame['info']['participants'][9]['assists'];
 
     //-----------------------------------------------
+
+    //Consertando nome de alguns champions
+    if (apiTeamMate1Champion[x] == 'FiddleSticks') {
+      apiTeamMate1Champion[x] = 'Fiddlesticks';
+    }
+    if (apiTeamMate2Champion[x] == 'FiddleSticks') {
+      apiTeamMate2Champion[x] = 'Fiddlesticks';
+    }
+    if (apiTeamMate3Champion[x] == 'FiddleSticks') {
+      apiTeamMate3Champion[x] = 'Fiddlesticks';
+    }
+    if (apiTeamMate4Champion[x] == 'FiddleSticks') {
+      apiTeamMate4Champion[x] = 'Fiddlesticks';
+    }
+    if (apiTeamMate5Champion[x] == 'FiddleSticks') {
+      apiTeamMate5Champion[x] = 'Fiddlesticks';
+    }
+    if (apiTeamMate6Champion[x] == 'FiddleSticks') {
+      apiTeamMate6Champion[x] = 'Fiddlesticks';
+    }
+    if (apiTeamMate7Champion[x] == 'FiddleSticks') {
+      apiTeamMate7Champion[x] = 'Fiddlesticks';
+    }
+    if (apiTeamMate8Champion[x] == 'FiddleSticks') {
+      apiTeamMate8Champion[x] = 'Fiddlesticks';
+    }
+    if (apiTeamMate9Champion[x] == 'FiddleSticks') {
+      apiTeamMate9Champion[x] = 'Fiddlesticks';
+    }
+    if (apiTeamMate10Champion[x] == 'FiddleSticks') {
+      apiTeamMate10Champion[x] = 'Fiddlesticks';
+    }
   }
 
   apiRequestTopPlayers() async {
@@ -459,6 +495,25 @@ class _BaseScreenState extends State<BaseScreen> {
       needToChange++;
     }
     flag = true;
+  }
+
+  getVersionImagesApi() async {
+    url = 'https://ddragon.leagueoflegends.com/api/versions.json';
+
+    Network api = Network(url);
+
+    apiDataVersionImage = await api.getData();
+
+    // Atualmente (2022) a actualVersion = 12.20.1
+    actualVersion = apiDataVersionImage[0];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getVersionImagesApi().then((getVersion) {
+      //print(actualVersion);
+    });
   }
 
   @override
@@ -913,7 +968,7 @@ class _BaseScreenState extends State<BaseScreen> {
                         ],
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       Column(
                         children: [
@@ -922,10 +977,11 @@ class _BaseScreenState extends State<BaseScreen> {
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.lightBlue,
-                              fixedSize: const Size(160, 45),
+                              primary: Colors.deepPurple,
+                              fixedSize: const Size(140, 35),
                             ),
                             onPressed: () {
+                              FocusScope.of(context).unfocus();
                               setState(() {
                                 botao_clicado = true;
                               });
@@ -1186,41 +1242,86 @@ class _BaseScreenState extends State<BaseScreen> {
                                                 style: gameNicksStyle,
                                               ),
                                               Text(
-                                                  '${apiTeamMate1Kills[i]}/${apiTeamMate1Deaths[i]}/${apiTeamMate1Assists[i]}'),
+                                                '${apiTeamMate1Kills[i]}/${apiTeamMate1Deaths[i]}/${apiTeamMate1Assists[i]}',
+                                                style: gameScoreStyle,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Image.network(
+                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate1Champion[i]}.png',
+                                                width: 40,
+                                                height: 40,
+                                              ),
                                               Text(apiTeamMate1Champion[i]),
-                                              Text(apiTeamMate1Lane[i]),
                                               SelectableText(
                                                 apiTeamMate2Nick[i],
                                                 style: gameNicksStyle,
                                               ),
                                               Text(
-                                                  '${apiTeamMate2Kills[i]}/${apiTeamMate2Deaths[i]}/${apiTeamMate2Assists[i]}'),
+                                                '${apiTeamMate2Kills[i]}/${apiTeamMate2Deaths[i]}/${apiTeamMate2Assists[i]}',
+                                                style: gameScoreStyle,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Image.network(
+                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate2Champion[i]}.png',
+                                                width: 40,
+                                                height: 40,
+                                              ),
                                               Text(apiTeamMate2Champion[i]),
-                                              Text(apiTeamMate2Lane[i]),
                                               SelectableText(
                                                 apiTeamMate3Nick[i],
                                                 style: gameNicksStyle,
                                               ),
                                               Text(
-                                                  '${apiTeamMate3Kills[i]}/${apiTeamMate3Deaths[i]}/${apiTeamMate3Assists[i]}'),
+                                                '${apiTeamMate3Kills[i]}/${apiTeamMate3Deaths[i]}/${apiTeamMate3Assists[i]}',
+                                                style: gameScoreStyle,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Image.network(
+                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate3Champion[i]}.png',
+                                                width: 40,
+                                                height: 40,
+                                              ),
                                               Text(apiTeamMate3Champion[i]),
-                                              Text(apiTeamMate3Lane[i]),
                                               SelectableText(
                                                 apiTeamMate4Nick[i],
                                                 style: gameNicksStyle,
                                               ),
                                               Text(
-                                                  '${apiTeamMate4Kills[i]}/${apiTeamMate4Deaths[i]}/${apiTeamMate4Assists[i]}'),
+                                                '${apiTeamMate4Kills[i]}/${apiTeamMate4Deaths[i]}/${apiTeamMate4Assists[i]}',
+                                                style: gameScoreStyle,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Image.network(
+                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate4Champion[i]}.png',
+                                                width: 40,
+                                                height: 40,
+                                              ),
                                               Text(apiTeamMate4Champion[i]),
-                                              Text(apiTeamMate4Lane[i]),
                                               SelectableText(
                                                 apiTeamMate5Nick[i],
                                                 style: gameNicksStyle,
                                               ),
                                               Text(
-                                                  '${apiTeamMate5Kills[i]}/${apiTeamMate5Deaths[i]}/${apiTeamMate5Assists[i]}'),
+                                                '${apiTeamMate5Kills[i]}/${apiTeamMate5Deaths[i]}/${apiTeamMate5Assists[i]}',
+                                                style: gameScoreStyle,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Image.network(
+                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate5Champion[i]}.png',
+                                                width: 40,
+                                                height: 40,
+                                              ),
                                               Text(apiTeamMate5Champion[i]),
-                                              Text(apiTeamMate5Lane[i]),
                                             ],
                                           ),
                                         ),
@@ -1263,41 +1364,86 @@ class _BaseScreenState extends State<BaseScreen> {
                                                 style: gameNicksStyle,
                                               ),
                                               Text(
-                                                  '${apiTeamMate6Kills[i]}/${apiTeamMate6Deaths[i]}/${apiTeamMate6Assists[i]}'),
+                                                '${apiTeamMate6Kills[i]}/${apiTeamMate6Deaths[i]}/${apiTeamMate6Assists[i]}',
+                                                style: gameScoreStyle,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Image.network(
+                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate6Champion[i]}.png',
+                                                width: 40,
+                                                height: 40,
+                                              ),
                                               Text(apiTeamMate6Champion[i]),
-                                              Text(apiTeamMate6Lane[i]),
                                               SelectableText(
                                                 apiTeamMate7Nick[i],
                                                 style: gameNicksStyle,
                                               ),
                                               Text(
-                                                  '${apiTeamMate7Kills[i]}/${apiTeamMate7Deaths[i]}/${apiTeamMate7Assists[i]}'),
+                                                '${apiTeamMate7Kills[i]}/${apiTeamMate7Deaths[i]}/${apiTeamMate7Assists[i]}',
+                                                style: gameScoreStyle,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Image.network(
+                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate7Champion[i]}.png',
+                                                width: 40,
+                                                height: 40,
+                                              ),
                                               Text(apiTeamMate7Champion[i]),
-                                              Text(apiTeamMate7Lane[i]),
                                               SelectableText(
                                                 apiTeamMate8Nick[i],
                                                 style: gameNicksStyle,
                                               ),
                                               Text(
-                                                  '${apiTeamMate8Kills[i]}/${apiTeamMate8Deaths[i]}/${apiTeamMate8Assists[i]}'),
+                                                '${apiTeamMate8Kills[i]}/${apiTeamMate8Deaths[i]}/${apiTeamMate8Assists[i]}',
+                                                style: gameScoreStyle,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Image.network(
+                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate8Champion[i]}.png',
+                                                width: 40,
+                                                height: 40,
+                                              ),
                                               Text(apiTeamMate8Champion[i]),
-                                              Text(apiTeamMate8Lane[i]),
                                               SelectableText(
                                                 apiTeamMate9Nick[i],
                                                 style: gameNicksStyle,
                                               ),
                                               Text(
-                                                  '${apiTeamMate9Kills[i]}/${apiTeamMate9Deaths[i]}/${apiTeamMate9Assists[i]}'),
+                                                '${apiTeamMate9Kills[i]}/${apiTeamMate9Deaths[i]}/${apiTeamMate9Assists[i]}',
+                                                style: gameScoreStyle,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Image.network(
+                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate9Champion[i]}.png',
+                                                width: 40,
+                                                height: 40,
+                                              ),
                                               Text(apiTeamMate9Champion[i]),
-                                              Text(apiTeamMate9Lane[i]),
                                               SelectableText(
                                                 apiTeamMate10Nick[i],
                                                 style: gameNicksStyle,
                                               ),
                                               Text(
-                                                  '${apiTeamMate10Kills[i]}/${apiTeamMate10Deaths[i]}/${apiTeamMate10Assists[i]}'),
+                                                '${apiTeamMate10Kills[i]}/${apiTeamMate10Deaths[i]}/${apiTeamMate10Assists[i]}',
+                                                style: gameScoreStyle,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Image.network(
+                                                'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate10Champion[i]}.png',
+                                                width: 40,
+                                                height: 40,
+                                              ),
                                               Text(apiTeamMate10Champion[i]),
-                                              Text(apiTeamMate10Lane[i]),
                                             ],
                                           ),
                                         ),
