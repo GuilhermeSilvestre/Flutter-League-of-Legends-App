@@ -3,9 +3,23 @@
 
 ## Search characters in League Of Legends (Br Server)
 
-
 Chave (Header: X-Riot-Token) você pega em: https://developer.riotgames.com/
 
+Biblioteca para imagens:
+
+https://riot-api-libraries.readthedocs.io/en/latest/ddragon.html
+
+Pegar a versão mais recente aqui (atualmente 12.20.1):
+
+https://ddragon.leagueoflegends.com/api/versions.json
+
+URLs pra pegar as imagens aqui:
+
+https://ddragon.leagueoflegends.com/cdn/12.20.1/img/champion/Nilah.png
+
+Você pode ver a lista de todos champions aqui:
+
+https://ddragon.leagueoflegends.com/cdn/12.20.1/data/en_US/champion.json
 
 
 <img src="https://user-images.githubusercontent.com/100291684/198746351-9f8d2451-7e17-4ce2-997a-d1028aecd43a.jpeg" width="300" height="600" />

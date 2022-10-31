@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:leagueoflegends/Screens/ChallengersScreen.dart';
 import 'package:leagueoflegends/Screens/PerfilScreen.dart';
+import 'package:leagueoflegends/constants.dart';
 import 'package:leagueoflegends/network.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -21,6 +22,8 @@ class _BaseScreenState extends State<BaseScreen> {
   int needToChange = 0;
   bool flag = false;
   String loading = 'start';
+  List<bool> exibirJogos = List.filled(20, false);
+  bool botao_clicado = false;
 
   String nickPlayer = ''; // Vem de TextField do app (input)
 
@@ -74,16 +77,80 @@ class _BaseScreenState extends State<BaseScreen> {
   dynamic apiPlayerWinsSoloQ;
   dynamic apiPlayerLossSoloQ;
 
-  dynamic apiTeamMate1Nick;
-  dynamic apiTeamMate2Nick;
-  dynamic apiTeamMate3Nick;
-  dynamic apiTeamMate4Nick;
-  dynamic apiTeamMate5Nick;
-  dynamic apiTeamMate6Nick;
-  dynamic apiTeamMate7Nick;
-  dynamic apiTeamMate8Nick;
-  dynamic apiTeamMate9Nick;
-  dynamic apiTeamMate10Nick;
+  late List<dynamic> apiTeamMate1Nick = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate1Champion = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate1Lane = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate1Kills = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate1Deaths = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate1Assists = List.filled(20, 'null');
+
+  late List<dynamic> apiTeamMate2Nick = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate2Champion = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate2Lane = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate2Kills = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate2Deaths = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate2Assists = List.filled(20, 'null');
+
+  late List<dynamic> apiTeamMate3Nick = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate3Champion = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate3Lane = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate3Kills = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate3Deaths = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate3Assists = List.filled(20, 'null');
+
+  late List<dynamic> apiTeamMate4Nick = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate4Champion = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate4Lane = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate4Kills = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate4Deaths = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate4Assists = List.filled(20, 'null');
+
+  late List<dynamic> apiTeamMate5Nick = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate5Champion = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate5Lane = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate5Kills = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate5Deaths = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate5Assists = List.filled(20, 'null');
+
+  late List<dynamic> apiTeamMate6Nick = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate6Champion = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate6Lane = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate6Kills = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate6Deaths = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate6Assists = List.filled(20, 'null');
+
+  late List<dynamic> apiTeamMate7Nick = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate7Champion = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate7Lane = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate7Kills = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate7Deaths = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate7Assists = List.filled(20, 'null');
+
+  late List<dynamic> apiTeamMate8Nick = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate8Champion = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate8Lane = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate8Kills = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate8Deaths = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate8Assists = List.filled(20, 'null');
+
+  late List<dynamic> apiTeamMate9Nick = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate9Champion = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate9Lane = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate9Kills = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate9Deaths = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate9Assists = List.filled(20, 'null');
+
+  late List<dynamic> apiTeamMate10Nick = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate10Champion = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate10Lane = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate10Kills = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate10Deaths = List.filled(20, 'null');
+  late List<dynamic> apiTeamMate10Assists = List.filled(20, 'null');
+
+  late List<dynamic> gameDuration = List.filled(20, 0.0);
+
+  late List<dynamic> team1WinGame = List.filled(20, false);
+  late List<dynamic> team2WinGame = List.filled(20, false);
 
   Future<void> updateScreen() async {
     await Future.delayed(Duration(seconds: 2));
@@ -229,23 +296,133 @@ class _BaseScreenState extends State<BaseScreen> {
     }
   }
 
-  apiRequestGameData(dynamic game) async {
-    url = 'https://americas.api.riotgames.com/lol/match/v5/matches/$apiGame1';
+  apiRequestGameData(dynamic game, int x) async {
+    url = 'https://americas.api.riotgames.com/lol/match/v5/matches/$game';
 
     Network api = Network(url);
 
     apiDataGame = await api.getData();
 
-    apiTeamMate1Nick = apiDataGame['info']['participants'][0]['summonerName'];
-    apiTeamMate2Nick = apiDataGame['info']['participants'][1]['summonerName'];
-    apiTeamMate3Nick = apiDataGame['info']['participants'][3]['summonerName'];
-    apiTeamMate4Nick = apiDataGame['info']['participants'][4]['summonerName'];
-    apiTeamMate5Nick = apiDataGame['info']['participants'][5]['summonerName'];
-    apiTeamMate6Nick = apiDataGame['info']['participants'][6]['summonerName'];
-    apiTeamMate7Nick = apiDataGame['info']['participants'][7]['summonerName'];
-    apiTeamMate8Nick = apiDataGame['info']['participants'][8]['summonerName'];
-    apiTeamMate9Nick = apiDataGame['info']['participants'][9]['summonerName'];
-    apiTeamMate10Nick = apiDataGame['info']['participants'][10]['summonerName'];
+    //Game Duration em minutos
+    gameDuration[x] = apiDataGame['info']['gameDuration'] / 60;
+    gameDuration[x] = gameDuration[x].truncate();
+    gameDuration[x] = gameDuration[x].toString();
+
+    //Vitoria ou derrota
+    team1WinGame[x] = apiDataGame['info']['teams'][0]['win'];
+    team2WinGame[x] = apiDataGame['info']['teams'][1]['win'];
+
+    //Carregando os dados dos jogadores por partida
+    //----------------------------------------------
+    apiTeamMate1Nick[x] =
+        apiDataGame['info']['participants'][0]['summonerName'];
+    apiTeamMate1Champion[x] =
+        apiDataGame['info']['participants'][0]['championName'];
+    apiTeamMate1Lane[x] = apiDataGame['info']['participants'][0]['lane'];
+    apiTeamMate1Kills[x] = apiDataGame['info']['participants'][0]['kills'];
+    apiTeamMate1Deaths[x] = apiDataGame['info']['participants'][0]['deaths'];
+    apiTeamMate1Assists[x] = apiDataGame['info']['participants'][0]['assists'];
+
+    //-----------------------------------------------
+
+    apiTeamMate2Nick[x] =
+        apiDataGame['info']['participants'][1]['summonerName'];
+    apiTeamMate2Champion[x] =
+        apiDataGame['info']['participants'][1]['championName'];
+    apiTeamMate2Lane[x] = apiDataGame['info']['participants'][1]['lane'];
+    apiTeamMate2Kills[x] = apiDataGame['info']['participants'][1]['kills'];
+    apiTeamMate2Deaths[x] = apiDataGame['info']['participants'][1]['deaths'];
+    apiTeamMate2Assists[x] = apiDataGame['info']['participants'][1]['assists'];
+
+    //-----------------------------------------------
+
+    apiTeamMate3Nick[x] =
+        apiDataGame['info']['participants'][2]['summonerName'];
+    apiTeamMate3Champion[x] =
+        apiDataGame['info']['participants'][2]['championName'];
+    apiTeamMate3Lane[x] = apiDataGame['info']['participants'][2]['lane'];
+    apiTeamMate3Kills[x] = apiDataGame['info']['participants'][2]['kills'];
+    apiTeamMate3Deaths[x] = apiDataGame['info']['participants'][2]['deaths'];
+    apiTeamMate3Assists[x] = apiDataGame['info']['participants'][2]['assists'];
+
+    //-----------------------------------------------
+
+    apiTeamMate4Nick[x] =
+        apiDataGame['info']['participants'][3]['summonerName'];
+    apiTeamMate4Champion[x] =
+        apiDataGame['info']['participants'][3]['championName'];
+    apiTeamMate4Lane[x] = apiDataGame['info']['participants'][3]['lane'];
+    apiTeamMate4Kills[x] = apiDataGame['info']['participants'][3]['kills'];
+    apiTeamMate4Deaths[x] = apiDataGame['info']['participants'][3]['deaths'];
+    apiTeamMate4Assists[x] = apiDataGame['info']['participants'][3]['assists'];
+
+    //-----------------------------------------------
+
+    apiTeamMate5Nick[x] =
+        apiDataGame['info']['participants'][4]['summonerName'];
+    apiTeamMate5Champion[x] =
+        apiDataGame['info']['participants'][4]['championName'];
+    apiTeamMate5Lane[x] = apiDataGame['info']['participants'][4]['lane'];
+    apiTeamMate5Kills[x] = apiDataGame['info']['participants'][4]['kills'];
+    apiTeamMate5Deaths[x] = apiDataGame['info']['participants'][4]['deaths'];
+    apiTeamMate5Assists[x] = apiDataGame['info']['participants'][4]['assists'];
+
+    //-----------------------------------------------
+
+    apiTeamMate6Nick[x] =
+        apiDataGame['info']['participants'][5]['summonerName'];
+    apiTeamMate6Champion[x] =
+        apiDataGame['info']['participants'][5]['championName'];
+    apiTeamMate6Lane[x] = apiDataGame['info']['participants'][5]['lane'];
+    apiTeamMate6Kills[x] = apiDataGame['info']['participants'][5]['kills'];
+    apiTeamMate6Deaths[x] = apiDataGame['info']['participants'][5]['deaths'];
+    apiTeamMate6Assists[x] = apiDataGame['info']['participants'][5]['assists'];
+
+    //-----------------------------------------------
+
+    apiTeamMate7Nick[x] =
+        apiDataGame['info']['participants'][6]['summonerName'];
+    apiTeamMate7Champion[x] =
+        apiDataGame['info']['participants'][6]['championName'];
+    apiTeamMate7Lane[x] = apiDataGame['info']['participants'][6]['lane'];
+    apiTeamMate7Kills[x] = apiDataGame['info']['participants'][6]['kills'];
+    apiTeamMate7Deaths[x] = apiDataGame['info']['participants'][6]['deaths'];
+    apiTeamMate7Assists[x] = apiDataGame['info']['participants'][6]['assists'];
+
+    //-----------------------------------------------
+
+    apiTeamMate8Nick[x] =
+        apiDataGame['info']['participants'][7]['summonerName'];
+    apiTeamMate8Champion[x] =
+        apiDataGame['info']['participants'][7]['championName'];
+    apiTeamMate8Lane[x] = apiDataGame['info']['participants'][7]['lane'];
+    apiTeamMate8Kills[x] = apiDataGame['info']['participants'][7]['kills'];
+    apiTeamMate8Deaths[x] = apiDataGame['info']['participants'][7]['deaths'];
+    apiTeamMate8Assists[x] = apiDataGame['info']['participants'][7]['assists'];
+
+    //-----------------------------------------------
+
+    apiTeamMate9Nick[x] =
+        apiDataGame['info']['participants'][8]['summonerName'];
+    apiTeamMate9Champion[x] =
+        apiDataGame['info']['participants'][8]['championName'];
+    apiTeamMate9Lane[x] = apiDataGame['info']['participants'][8]['lane'];
+    apiTeamMate9Kills[x] = apiDataGame['info']['participants'][8]['kills'];
+    apiTeamMate9Deaths[x] = apiDataGame['info']['participants'][8]['deaths'];
+    apiTeamMate9Assists[x] = apiDataGame['info']['participants'][8]['assists'];
+
+    //-----------------------------------------------
+
+    apiTeamMate10Nick[x] =
+        apiDataGame['info']['participants'][9]['summonerName'];
+    apiTeamMate10Champion[x] =
+        apiDataGame['info']['participants'][9]['championName'];
+    apiTeamMate10Lane[x] = apiDataGame['info']['participants'][9]['lane'];
+    apiTeamMate10Kills[x] = apiDataGame['info']['participants'][9]['kills'];
+    apiTeamMate10Deaths[x] = apiDataGame['info']['participants'][9]['deaths'];
+    apiTeamMate10Assists[x] = apiDataGame['info']['participants'][9]['assists'];
+
+    //-----------------------------------------------
   }
 
   apiRequestTopPlayers() async {
@@ -399,6 +576,27 @@ class _BaseScreenState extends State<BaseScreen> {
                     width: 100,
                     child: ElevatedButton(
                       onPressed: () {
+                        exibirJogos[0] = false;
+                        exibirJogos[1] = false;
+                        exibirJogos[2] = false;
+                        exibirJogos[3] = false;
+                        exibirJogos[4] = false;
+                        exibirJogos[5] = false;
+                        exibirJogos[6] = false;
+                        exibirJogos[7] = false;
+                        exibirJogos[8] = false;
+                        exibirJogos[9] = false;
+                        exibirJogos[10] = false;
+                        exibirJogos[11] = false;
+                        exibirJogos[12] = false;
+                        exibirJogos[13] = false;
+                        exibirJogos[14] = false;
+                        exibirJogos[15] = false;
+                        exibirJogos[16] = false;
+                        exibirJogos[17] = false;
+                        exibirJogos[18] = false;
+                        exibirJogos[19] = false;
+
                         //Aqui primeiro ele pega os dados, depois ranking, depois atualiza tela
                         if (nickPlayer != '') {
                           FocusScope.of(context).unfocus();
@@ -408,6 +606,8 @@ class _BaseScreenState extends State<BaseScreen> {
                               apiRequestRank();
                             }).then((atualizar) {
                               updateScreen();
+                            }).then((games) {
+                              apiRequestGames();
                             });
                           });
                         } else {
@@ -715,6 +915,416 @@ class _BaseScreenState extends State<BaseScreen> {
                       const SizedBox(
                         height: 10,
                       ),
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.lightBlue,
+                              fixedSize: const Size(160, 45),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                botao_clicado = true;
+                              });
+                              if (apiGame1 != null) {
+                                apiRequestGameData(apiGame1, 0)
+                                    .then((exibirjogos) {
+                                  exibirJogos[0] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame2 != null) {
+                                apiRequestGameData(apiGame2, 1)
+                                    .then((exibirjogos) {
+                                  exibirJogos[1] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame3 != null) {
+                                apiRequestGameData(apiGame3, 2)
+                                    .then((exibirjogos) {
+                                  exibirJogos[2] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame4 != null) {
+                                apiRequestGameData(apiGame4, 3)
+                                    .then((exibirjogos) {
+                                  exibirJogos[3] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame5 != null) {
+                                apiRequestGameData(apiGame5, 4)
+                                    .then((exibirjogos) {
+                                  exibirJogos[4] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame6 != null) {
+                                apiRequestGameData(apiGame6, 5)
+                                    .then((exibirjogos) {
+                                  exibirJogos[5] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame7 != null) {
+                                apiRequestGameData(apiGame7, 6)
+                                    .then((exibirjogos) {
+                                  exibirJogos[6] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame8 != null) {
+                                apiRequestGameData(apiGame8, 7)
+                                    .then((exibirjogos) {
+                                  exibirJogos[7] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame9 != null) {
+                                apiRequestGameData(apiGame9, 8)
+                                    .then((exibirjogos) {
+                                  exibirJogos[8] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame10 != null) {
+                                apiRequestGameData(apiGame10, 9)
+                                    .then((exibirjogos) {
+                                  exibirJogos[9] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame11 != null) {
+                                apiRequestGameData(apiGame11, 10)
+                                    .then((exibirjogos) {
+                                  exibirJogos[10] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame12 != null) {
+                                apiRequestGameData(apiGame12, 11)
+                                    .then((exibirjogos) {
+                                  exibirJogos[11] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame13 != null) {
+                                apiRequestGameData(apiGame13, 12)
+                                    .then((exibirjogos) {
+                                  exibirJogos[12] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame14 != null) {
+                                apiRequestGameData(apiGame14, 13)
+                                    .then((exibirjogos) {
+                                  exibirJogos[13] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame15 != null) {
+                                apiRequestGameData(apiGame15, 14)
+                                    .then((exibirjogos) {
+                                  exibirJogos[14] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame16 != null) {
+                                apiRequestGameData(apiGame16, 15)
+                                    .then((exibirjogos) {
+                                  exibirJogos[15] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame17 != null) {
+                                apiRequestGameData(apiGame17, 16)
+                                    .then((exibirjogos) {
+                                  exibirJogos[16] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame18 != null) {
+                                apiRequestGameData(apiGame18, 17)
+                                    .then((exibirjogos) {
+                                  exibirJogos[17] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame19 != null) {
+                                apiRequestGameData(apiGame19, 18)
+                                    .then((exibirjogos) {
+                                  exibirJogos[18] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+                              if (apiGame20 != null) {
+                                apiRequestGameData(apiGame20, 19)
+                                    .then((exibirjogos) {
+                                  exibirJogos[19] = true;
+                                  botao_clicado = false;
+                                }).then((atualizar) {
+                                  updateScreen();
+                                });
+                              }
+
+                              exibirJogos[0] = false;
+                              exibirJogos[1] = false;
+                              exibirJogos[2] = false;
+                              exibirJogos[3] = false;
+                              exibirJogos[4] = false;
+                              exibirJogos[5] = false;
+                              exibirJogos[6] = false;
+                              exibirJogos[7] = false;
+                              exibirJogos[8] = false;
+                              exibirJogos[9] = false;
+                              exibirJogos[10] = false;
+                              exibirJogos[11] = false;
+                              exibirJogos[12] = false;
+                              exibirJogos[13] = false;
+                              exibirJogos[14] = false;
+                              exibirJogos[15] = false;
+                              exibirJogos[16] = false;
+                              exibirJogos[17] = false;
+                              exibirJogos[18] = false;
+                              exibirJogos[19] = false;
+                            },
+                            child: Text(
+                              'Exibir jogos',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                      for (int i = 0; i < 20; i++)
+                        if (exibirJogos[i] == true)
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                        'Duração da partida: ${gameDuration[i]} minutos'),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Container(
+                                          width: 140,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              if (team1WinGame[i] == true)
+                                                Text(
+                                                  'VITÓRIA',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.lightGreen),
+                                                ),
+                                              if (team1WinGame[i] == false)
+                                                Text(
+                                                  'DERROTA',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.deepOrange),
+                                                ),
+                                              SelectableText(
+                                                apiTeamMate1Nick[i],
+                                                style: gameNicksStyle,
+                                              ),
+                                              Text(
+                                                  '${apiTeamMate1Kills[i]}/${apiTeamMate1Deaths[i]}/${apiTeamMate1Assists[i]}'),
+                                              Text(apiTeamMate1Champion[i]),
+                                              Text(apiTeamMate1Lane[i]),
+                                              SelectableText(
+                                                apiTeamMate2Nick[i],
+                                                style: gameNicksStyle,
+                                              ),
+                                              Text(
+                                                  '${apiTeamMate2Kills[i]}/${apiTeamMate2Deaths[i]}/${apiTeamMate2Assists[i]}'),
+                                              Text(apiTeamMate2Champion[i]),
+                                              Text(apiTeamMate2Lane[i]),
+                                              SelectableText(
+                                                apiTeamMate3Nick[i],
+                                                style: gameNicksStyle,
+                                              ),
+                                              Text(
+                                                  '${apiTeamMate3Kills[i]}/${apiTeamMate3Deaths[i]}/${apiTeamMate3Assists[i]}'),
+                                              Text(apiTeamMate3Champion[i]),
+                                              Text(apiTeamMate3Lane[i]),
+                                              SelectableText(
+                                                apiTeamMate4Nick[i],
+                                                style: gameNicksStyle,
+                                              ),
+                                              Text(
+                                                  '${apiTeamMate4Kills[i]}/${apiTeamMate4Deaths[i]}/${apiTeamMate4Assists[i]}'),
+                                              Text(apiTeamMate4Champion[i]),
+                                              Text(apiTeamMate4Lane[i]),
+                                              SelectableText(
+                                                apiTeamMate5Nick[i],
+                                                style: gameNicksStyle,
+                                              ),
+                                              Text(
+                                                  '${apiTeamMate5Kills[i]}/${apiTeamMate5Deaths[i]}/${apiTeamMate5Assists[i]}'),
+                                              Text(apiTeamMate5Champion[i]),
+                                              Text(apiTeamMate5Lane[i]),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 25,
+                                        ),
+                                        Text(
+                                          'VS',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 25,
+                                        ),
+                                        Container(
+                                          width: 140,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              if (team2WinGame[i] == true)
+                                                Text(
+                                                  'VITÓRIA',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.lightGreen),
+                                                ),
+                                              if (team2WinGame[i] == false)
+                                                Text(
+                                                  'DERROTA',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.deepOrange),
+                                                ),
+                                              SelectableText(
+                                                apiTeamMate6Nick[i],
+                                                style: gameNicksStyle,
+                                              ),
+                                              Text(
+                                                  '${apiTeamMate6Kills[i]}/${apiTeamMate6Deaths[i]}/${apiTeamMate6Assists[i]}'),
+                                              Text(apiTeamMate6Champion[i]),
+                                              Text(apiTeamMate6Lane[i]),
+                                              SelectableText(
+                                                apiTeamMate7Nick[i],
+                                                style: gameNicksStyle,
+                                              ),
+                                              Text(
+                                                  '${apiTeamMate7Kills[i]}/${apiTeamMate7Deaths[i]}/${apiTeamMate7Assists[i]}'),
+                                              Text(apiTeamMate7Champion[i]),
+                                              Text(apiTeamMate7Lane[i]),
+                                              SelectableText(
+                                                apiTeamMate8Nick[i],
+                                                style: gameNicksStyle,
+                                              ),
+                                              Text(
+                                                  '${apiTeamMate8Kills[i]}/${apiTeamMate8Deaths[i]}/${apiTeamMate8Assists[i]}'),
+                                              Text(apiTeamMate8Champion[i]),
+                                              Text(apiTeamMate8Lane[i]),
+                                              SelectableText(
+                                                apiTeamMate9Nick[i],
+                                                style: gameNicksStyle,
+                                              ),
+                                              Text(
+                                                  '${apiTeamMate9Kills[i]}/${apiTeamMate9Deaths[i]}/${apiTeamMate9Assists[i]}'),
+                                              Text(apiTeamMate9Champion[i]),
+                                              Text(apiTeamMate9Lane[i]),
+                                              SelectableText(
+                                                apiTeamMate10Nick[i],
+                                                style: gameNicksStyle,
+                                              ),
+                                              Text(
+                                                  '${apiTeamMate10Kills[i]}/${apiTeamMate10Deaths[i]}/${apiTeamMate10Assists[i]}'),
+                                              Text(apiTeamMate10Champion[i]),
+                                              Text(apiTeamMate10Lane[i]),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                      if (botao_clicado == true)
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Align(
+                              child: SizedBox(
+                                child: SizedBox(
+                                  width: 60,
+                                  height: 60,
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                 ),
