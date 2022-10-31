@@ -156,6 +156,8 @@ class _BaseScreenState extends State<BaseScreen> {
   dynamic actualVersion;
   dynamic apiDataVersionImage;
 
+  final fieldText = TextEditingController();
+
   Future<void> updateScreen() async {
     await Future.delayed(Duration(seconds: 2));
     setState(() {
@@ -178,6 +180,22 @@ class _BaseScreenState extends State<BaseScreen> {
   apiRequest() async {
     url =
         'https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/$nickPlayer';
+
+    Network api = Network(url);
+
+    apiData = await api.getData();
+
+    if (apiData != -1) {
+      apiPlayerLevel = apiData['summonerLevel'].toString();
+      apiPlayerNick = apiData['name'];
+      apiPlayerId = apiData['id'];
+      apiPlayerPUUID = apiData['puuid'];
+    }
+  }
+
+  apiRequestByPlayerInMatch(String player) async {
+    url =
+        'https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/$player';
 
     Network api = Network(url);
 
@@ -597,6 +615,7 @@ class _BaseScreenState extends State<BaseScreen> {
                       width: 210,
                       height: 50,
                       child: TextField(
+                        controller: fieldText,
                         style: TextStyle(color: Colors.deepPurpleAccent),
                         onChanged: (typed) {
                           nickPlayer = typed;
@@ -1200,6 +1219,7 @@ class _BaseScreenState extends State<BaseScreen> {
                         ],
                       ),
                       for (int i = 0; i < 20; i++)
+                        //EXIBIR CARD DOS JOGOS
                         if (exibirJogos[i] == true)
                           Column(
                             children: [
@@ -1237,9 +1257,45 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       fontSize: 16,
                                                       color: Colors.deepOrange),
                                                 ),
-                                              SelectableText(
-                                                apiTeamMate1Nick[i],
-                                                style: gameNicksStyle,
+                                              OutlinedButton(
+                                                onPressed: () {
+                                                  fieldText.clear();
+                                                  FocusScope.of(context)
+                                                      .unfocus();
+                                                  setState(() {
+                                                    loading = 'loading';
+                                                    //Limpar jogos exibidos
+                                                    for (int j = 0;
+                                                        j < 20;
+                                                        j++) {
+                                                      exibirJogos[j] = false;
+                                                    }
+                                                    apiRequestByPlayerInMatch(
+                                                            apiTeamMate1Nick[i])
+                                                        .then((finish) {
+                                                      apiRequestRank();
+                                                    }).then((atualizar) {
+                                                      updateScreen();
+                                                    }).then((games) {
+                                                      apiRequestGames();
+                                                    });
+                                                  });
+                                                },
+                                                style: OutlinedButton.styleFrom(
+                                                  side: BorderSide(
+                                                      width: 1,
+                                                      color: Colors.deepPurple),
+                                                  shadowColor: Colors.white54,
+                                                  elevation: 1,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                20)),
+                                                  ),
+                                                ),
+                                                child: Text(apiTeamMate1Nick[i],
+                                                    style: gameNicksStyle),
                                               ),
                                               Text(
                                                 '${apiTeamMate1Kills[i]}/${apiTeamMate1Deaths[i]}/${apiTeamMate1Assists[i]}',
@@ -1454,6 +1510,7 @@ class _BaseScreenState extends State<BaseScreen> {
                               ),
                             ],
                           ),
+                      // LOADING BUTTON
                       if (botao_clicado == true)
                         Column(
                           children: [
