@@ -5,6 +5,8 @@
 
 Chave (Header: X-Riot-Token) você pega em: https://developer.riotgames.com/
 
+Clicar no nome do seu perfil, depois em Apps -> LEAGUE O FLEGENDS PLAYERS
+
 Biblioteca para imagens:
 
 https://riot-api-libraries.readthedocs.io/en/latest/ddragon.html

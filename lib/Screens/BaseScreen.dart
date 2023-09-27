@@ -835,6 +835,12 @@ class _BaseScreenState extends State<BaseScreen> {
                                         width: 80,
                                         height: 80,
                                       ),
+                                    if (apiPlayerTierSoloQ == 'EMERALD')
+                                      Image.asset(
+                                        'images/tier-icons/Emerald.png',
+                                        width: 80,
+                                        height: 80,
+                                      ),
                                     if (apiPlayerTierSoloQ == 'DIAMOND')
                                       Image.asset(
                                         'images/tier-icons/Diamond.png',
@@ -929,6 +935,12 @@ class _BaseScreenState extends State<BaseScreen> {
                                     if (apiPlayerTierFlex == 'PLATINUM')
                                       Image.asset(
                                         'images/tier-icons/Platinum.png',
+                                        width: 80,
+                                        height: 80,
+                                      ),
+                                    if (apiPlayerTierFlex == 'EMERALD')
+                                      Image.asset(
+                                        'images/tier-icons/Emerald.png',
                                         width: 80,
                                         height: 80,
                                       ),
@@ -1223,7 +1235,7 @@ class _BaseScreenState extends State<BaseScreen> {
                         if (exibirJogos[i] == true)
                           ExpansionTile(
                             title:
-                                Text('Partida ${i + 1}', style: gameNicksStyle),
+                                Text('Partida ${i + 1}', style: partidaStyle),
                             children: [
                               Column(
                                 children: [
@@ -1366,16 +1378,18 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       '${apiTeamMate1Kills[i]}/${apiTeamMate1Deaths[i]}/${apiTeamMate1Assists[i]}',
                                                       style: gameScoreStyle,
                                                     ),
+                                                    Text(apiTeamMate1Champion[
+                                                        i]),
                                                     SizedBox(
                                                       height: 5,
                                                     ),
+
                                                     Image.network(
                                                       'https://ddragon.leagueoflegends.com/cdn/$actualVersion/img/champion/${apiTeamMate1Champion[i]}.png',
                                                       width: 40,
                                                       height: 40,
                                                     ),
-                                                    Text(apiTeamMate1Champion[
-                                                        i]),
+
                                                     SizedBox(
                                                       height: 3,
                                                     ),
@@ -1439,6 +1453,8 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       '${apiTeamMate2Kills[i]}/${apiTeamMate2Deaths[i]}/${apiTeamMate2Assists[i]}',
                                                       style: gameScoreStyle,
                                                     ),
+                                                    Text(apiTeamMate2Champion[
+                                                        i]),
                                                     SizedBox(
                                                       height: 5,
                                                     ),
@@ -1447,8 +1463,7 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       width: 40,
                                                       height: 40,
                                                     ),
-                                                    Text(apiTeamMate2Champion[
-                                                        i]),
+
                                                     SizedBox(
                                                       height: 3,
                                                     ),
@@ -1512,6 +1527,8 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       '${apiTeamMate3Kills[i]}/${apiTeamMate3Deaths[i]}/${apiTeamMate3Assists[i]}',
                                                       style: gameScoreStyle,
                                                     ),
+                                                    Text(apiTeamMate3Champion[
+                                                        i]),
                                                     SizedBox(
                                                       height: 5,
                                                     ),
@@ -1520,8 +1537,7 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       width: 40,
                                                       height: 40,
                                                     ),
-                                                    Text(apiTeamMate3Champion[
-                                                        i]),
+
                                                     SizedBox(
                                                       height: 3,
                                                     ),
@@ -1585,6 +1601,8 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       '${apiTeamMate4Kills[i]}/${apiTeamMate4Deaths[i]}/${apiTeamMate4Assists[i]}',
                                                       style: gameScoreStyle,
                                                     ),
+                                                    Text(apiTeamMate4Champion[
+                                                        i]),
                                                     SizedBox(
                                                       height: 5,
                                                     ),
@@ -1593,8 +1611,7 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       width: 40,
                                                       height: 40,
                                                     ),
-                                                    Text(apiTeamMate4Champion[
-                                                        i]),
+
                                                     SizedBox(
                                                       height: 3,
                                                     ),
@@ -1658,6 +1675,8 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       '${apiTeamMate5Kills[i]}/${apiTeamMate5Deaths[i]}/${apiTeamMate5Assists[i]}',
                                                       style: gameScoreStyle,
                                                     ),
+                                                    Text(apiTeamMate5Champion[
+                                                        i]),
                                                     SizedBox(
                                                       height: 5,
                                                     ),
@@ -1666,8 +1685,6 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       width: 40,
                                                       height: 40,
                                                     ),
-                                                    Text(apiTeamMate5Champion[
-                                                        i]),
                                                   ],
                                                 ),
                                               ),
@@ -1794,6 +1811,8 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       '${apiTeamMate6Kills[i]}/${apiTeamMate6Deaths[i]}/${apiTeamMate6Assists[i]}',
                                                       style: gameScoreStyle,
                                                     ),
+                                                    Text(apiTeamMate6Champion[
+                                                        i]),
                                                     SizedBox(
                                                       height: 5,
                                                     ),
@@ -1802,8 +1821,7 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       width: 40,
                                                       height: 40,
                                                     ),
-                                                    Text(apiTeamMate6Champion[
-                                                        i]),
+
                                                     SizedBox(
                                                       height: 3,
                                                     ),
@@ -1867,6 +1885,8 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       '${apiTeamMate7Kills[i]}/${apiTeamMate7Deaths[i]}/${apiTeamMate7Assists[i]}',
                                                       style: gameScoreStyle,
                                                     ),
+                                                    Text(apiTeamMate7Champion[
+                                                        i]),
                                                     SizedBox(
                                                       height: 5,
                                                     ),
@@ -1875,8 +1895,7 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       width: 40,
                                                       height: 40,
                                                     ),
-                                                    Text(apiTeamMate7Champion[
-                                                        i]),
+
                                                     SizedBox(
                                                       height: 3,
                                                     ),
@@ -1940,6 +1959,8 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       '${apiTeamMate8Kills[i]}/${apiTeamMate8Deaths[i]}/${apiTeamMate8Assists[i]}',
                                                       style: gameScoreStyle,
                                                     ),
+                                                    Text(apiTeamMate8Champion[
+                                                        i]),
                                                     SizedBox(
                                                       height: 5,
                                                     ),
@@ -1948,8 +1969,7 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       width: 40,
                                                       height: 40,
                                                     ),
-                                                    Text(apiTeamMate8Champion[
-                                                        i]),
+
                                                     SizedBox(
                                                       height: 3,
                                                     ),
@@ -2013,6 +2033,8 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       '${apiTeamMate9Kills[i]}/${apiTeamMate9Deaths[i]}/${apiTeamMate9Assists[i]}',
                                                       style: gameScoreStyle,
                                                     ),
+                                                    Text(apiTeamMate9Champion[
+                                                        i]),
                                                     SizedBox(
                                                       height: 5,
                                                     ),
@@ -2021,8 +2043,7 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       width: 40,
                                                       height: 40,
                                                     ),
-                                                    Text(apiTeamMate9Champion[
-                                                        i]),
+
                                                     SizedBox(
                                                       height: 3,
                                                     ),
@@ -2087,6 +2108,8 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       '${apiTeamMate10Kills[i]}/${apiTeamMate10Deaths[i]}/${apiTeamMate10Assists[i]}',
                                                       style: gameScoreStyle,
                                                     ),
+                                                    Text(apiTeamMate10Champion[
+                                                        i]),
                                                     SizedBox(
                                                       height: 5,
                                                     ),
@@ -2095,8 +2118,6 @@ class _BaseScreenState extends State<BaseScreen> {
                                                       width: 40,
                                                       height: 40,
                                                     ),
-                                                    Text(apiTeamMate10Champion[
-                                                        i]),
                                                   ],
                                                 ),
                                               ),
